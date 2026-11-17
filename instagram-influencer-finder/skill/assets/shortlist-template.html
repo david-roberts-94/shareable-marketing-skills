@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Creator Shortlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+  /* Klint "Warm Blueprint": warm paper, hairline grid, one ember signal, Geist + Geist Mono. Light only, by brand rule. */
+  :root {
+    color-scheme: light;
+    --paper: #f9f9f9; --surface: #ffffff; --ink: #262626; --muted: #6b6b6b; --faint: rgba(38,38,38,.28);
+    --ember: #fa5d19; --ember-deep: #e5510f; --peach: #fee5da; --ember-wash: rgba(250,93,25,.05);
+    --gridline: #e5e7eb; --hairline: #ededed; --fill: rgba(0,0,0,.04);
+    --ring: 0 0 0 1px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.03), 0 18px 32px -24px rgba(0,0,0,.12);
+    --sans: "Geist", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; color: var(--ink); font: 400 15px/1.5 var(--sans);
+    background-color: var(--paper);
+    background-image: linear-gradient(rgba(229,231,235,.55) 1px, transparent 1px), linear-gradient(90deg, rgba(229,231,235,.55) 1px, transparent 1px);
+    background-size: 48px 48px; background-position: -1px -1px;
+  }
+  a { color: inherit; text-underline-offset: 3px; text-decoration-color: var(--faint); }
+  a:hover { text-decoration-color: currentColor; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; border-radius: 4px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 28px 16px 72px; }
+  .mono { font-family: var(--mono); }
+  .muted { color: var(--muted); }
+
+  /* Top bar */
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 44px; }
+  .bar svg { height: 20px; width: auto; display: block; }
+  .token { font: 500 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .token .br { color: var(--faint); }
+
+  /* Hero */
+  .eyebrow { display: flex; align-items: center; gap: 8px; font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .eyebrow .sl { color: var(--faint); }
+  .eyebrow svg { width: 15px; height: 15px; color: var(--ember); }
+  h1 { font-weight: 500; font-size: clamp(30px, 4.6vw, 48px); line-height: 1.07; letter-spacing: -.02em; margin: 14px 0 10px; text-wrap: balance; }
+  h1 em { font-style: normal; color: var(--ember); }
+  .sub { color: var(--muted); font-size: 15px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; margin-top: 28px; background: var(--surface); border: 1px solid var(--gridline); border-radius: 16px; box-shadow: var(--ring); overflow: hidden; }
+  .stat { padding: 16px 18px; border-left: 1px solid var(--hairline); }
+  .stat:first-child { border-left: 0; }
+  .stat .k { font: 500 11px/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .stat .v { font-weight: 500; font-size: 26px; letter-spacing: -.02em; margin-top: 6px; line-height: 1.1; }
+  .stat .v.sm { font-size: 16px; letter-spacing: 0; margin-top: 10px; }
+  .stat .v.hot { color: var(--ember); }
+
+  /* Section seams */
+  .seam { display: flex; align-items: center; gap: 10px; margin: 56px 0 16px; font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .seam::before { content: ""; width: 2px; height: 14px; background: var(--ember); }
+  .seam .n { color: var(--ink); }
+  .seam .br { color: var(--faint); }
+  h2 { font-weight: 500; font-size: clamp(22px, 2.6vw, 28px); letter-spacing: -.015em; line-height: 1.15; margin: 0 0 18px; }
+
+  .panel { background: var(--surface); border: 1px solid var(--gridline); border-radius: 16px; box-shadow: var(--ring); }
+  .brief { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0; overflow: hidden; }
+  .brief div { padding: 16px 20px; border-top: 1px solid var(--hairline); border-left: 1px solid var(--hairline); margin: -1px 0 0 -1px; }
+  .lbl { font: 500 11px/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .pains { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 12px; }
+  .pain { padding: 16px 18px; }
+  .pain .t { font-weight: 500; }
+  .pain .q { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  .pain blockquote { margin: 10px 0 0; padding-left: 10px; border-left: 2px solid var(--ember); font-size: 13.5px; color: var(--muted); }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--gridline); border-radius: 999px; padding: 4px 12px; font-size: 13px; }
+  .pill .h { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+
+  /* Filters */
+  .tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+  .tabs { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--gridline); border-radius: 10px; }
+  .tabs button { font: 450 13px/1 var(--sans); color: var(--muted); background: transparent; border: 0; border-radius: 6px; padding: 8px 12px; cursor: pointer; }
+  .tabs button[aria-pressed="true"] { background: var(--fill); color: var(--ink); }
+  .tabs button .c { font-family: var(--mono); font-size: 11px; margin-left: 6px; color: var(--muted); }
+  .summary { color: var(--muted); max-width: 72ch; margin: 0 0 18px; }
+  .notice { border: 1px solid var(--gridline); border-left: 2px solid var(--ember); background: var(--surface); border-radius: 10px; padding: 10px 14px; font-size: 14px; margin-bottom: 16px; }
+
+  /* Creator cards */
+  .cards { display: grid; gap: 14px; }
+  .card { padding: 20px 22px 18px; }
+  .card.fan { border-color: #f6c7b0; box-shadow: var(--ring), inset 3px 0 0 var(--ember); }
+  .head { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; }
+  .avatar { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; font-weight: 600; font-size: 20px; color: var(--ink); background: var(--fill); box-shadow: 0 0 0 1px var(--gridline), 0 0 0 4px var(--surface), 0 0 0 5px var(--hairline); flex: none; }
+  .card.fan .avatar { box-shadow: 0 0 0 1px var(--gridline), 0 0 0 3px var(--surface), 0 0 0 5px var(--ember); }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .who { min-width: 0; }
+  .handle { font-weight: 500; font-size: 18px; letter-spacing: -.01em; text-decoration: none; }
+  .handle:hover { text-decoration: underline; text-decoration-color: var(--faint); }
+  .name { color: var(--muted); font-size: 14px; margin-left: 8px; }
+  .meta { font: 500 11.5px/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .meta b { color: var(--ink); font-weight: 500; }
+  .meta .dot { color: var(--faint); margin: 0 6px; }
+  .rank { font: 500 12px/1 var(--mono); color: var(--muted); align-self: start; white-space: nowrap; }
+  .rank .br { color: var(--faint); }
+  .rank b { color: var(--ink); font-weight: 500; font-size: 15px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--mono); letter-spacing: .05em; text-transform: uppercase; border-radius: 6px; padding: 6px 8px; border: 1px solid var(--gridline); color: var(--muted); background: var(--surface); }
+  .chip.fan { background: var(--peach); border-color: var(--peach); color: var(--ember-deep); }
+  .chip.fan::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ember); }
+  .chip.flag { border-style: dashed; }
+  .chip.flag::before { content: "!"; color: var(--ink); font-weight: 600; }
+  .why { font-size: 16px; line-height: 1.5; margin: 14px 0 4px; max-width: 75ch; }
+  .painlbl { font: 500 11.5px/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .painlbl .sl { color: var(--faint); margin-right: 6px; }
+  .grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 0; margin-top: 16px; border-top: 1px solid var(--hairline); }
+  .grid > div { padding-top: 14px; }
+  .grid > div + div { border-left: 1px solid var(--hairline); padding-left: 20px; margin-left: 20px; }
+  .posts { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .posts li { display: grid; grid-template-columns: auto 1fr; gap: 10px; font-size: 14px; }
+  .posts .i { font: 500 11px/1.9 var(--mono); color: var(--faint); }
+  .posts a { text-decoration: none; }
+  .posts a:hover .t { text-decoration: underline; text-decoration-color: var(--faint); }
+  .posts .arr { color: var(--muted); font-family: var(--mono); margin-left: 4px; }
+  .deal .big { font-weight: 500; font-size: 22px; letter-spacing: -.02em; }
+  .deal .big span { font-size: 14px; color: var(--muted); letter-spacing: 0; margin-left: 4px; }
+  .deal .pills { margin-top: 8px; gap: 6px; }
+  .deal .pill { padding: 3px 9px; font-size: 12px; }
+  .contact { font: 400 12.5px/1.4 var(--mono); color: var(--muted); margin-top: 12px; word-break: break-all; }
+  .foot { display: flex; justify-content: flex-end; margin-top: 14px; }
+  .go { display: inline-flex; align-items: center; gap: 6px; color: var(--ember); font-weight: 500; font-size: 14px; text-decoration: none; }
+  .go svg { width: 16px; height: 16px; transition: transform .2s ease; }
+  .go:hover svg { transform: translateX(2px); }
+
+  .searching { padding: 40px 20px; text-align: center; color: var(--muted); }
+  .searching .token { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--ember); }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--ember); animation: p 1.2s ease-in-out infinite; }
+  @keyframes p { 50% { opacity: .25; } }
+  @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } .go svg { transition: none; } }
+
+  footer { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--gridline); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 13px; }
+  footer a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); }
+  footer svg { height: 16px; width: auto; }
+
+  @media (max-width: 640px) {
+    .bar { margin-bottom: 32px; }
+    .head { grid-template-columns: auto 1fr; gap: 12px; }
+    .avatar { width: 52px; height: 52px; font-size: 17px; }
+    .rank { grid-column: 2; grid-row: 1; justify-self: end; }
+    .who { grid-column: 1 / -1; }
+    .name { display: block; margin: 2px 0 0; }
+    .grid { grid-template-columns: 1fr; }
+    .grid > div + div { border-left: 0; padding-left: 0; margin-left: 0; border-top: 1px solid var(--hairline); margin-top: 14px; }
+    .stat { border-left: 0; border-top: 1px solid var(--hairline); }
+    .stat:first-child { border-top: 0; }
+    .card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+// ===== Fill ONLY this object. See references/output.md. =====
+const DATA = {
+  status: "searching",
+  generated: "",
+  brand: { name: "", url: "", instagram: "" },
+  brief: { sells: "", priceRange: "", customer: "", whyBuy: "", angle: "", country: "", size: "" },
+  painPoints: [],
+  competitors: [],
+  summary: "",
+  missingAngles: [],
+  creators: [],
+  tiktokCreators: []
+};
+// ===== Do not change below this line. =====
+
+const ANGLE_NAME = { Category: "Already in the category", Pain: "Talks about the pain", Customer: "Is the customer" };
+const ANGLE_SHORT = { Category: "Category", Pain: "Pain", Customer: "Customer" };
+const LOGO = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -83.32 405.59 94.74" role="img" aria-label="Klint AI"><g transform="translate(-13.21 -91.36) scale(2.3663)" fill="none" stroke="#fa5d19" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(10 18 22.5)"><path d="M26 14.80V33A8 8 0 0 1 10 33V23L14.96 28.28" stroke-width="4"/><circle cx="26" cy="9.40" r="3.4" stroke-width="3.12"/></g></g><path fill="#262626" transform="translate(76.39 0)" d="M8 0V-71H21V-38.6L48.8 -71H64.2L37.6 -39.8L65.9 0H51L29 -30.9L21 -21.8V0ZM82.5 0Q76.7 0 73.2 -3Q69.7 -6 69.7 -12.6V-71H82.5V-13.9Q82.5 -11.9 83.55 -10.9Q84.6 -9.9 86.5 -9.9H90.4V0ZM94.9 0V-53.4H107.7V0ZM94.7 -60.5V-71.9H108V-60.5ZM117.3 0V-53.4H128.9L129.4 -38.4L127.9 -39Q128.7 -44.6 131.2 -48Q133.7 -51.4 137.3 -53Q140.9 -54.6 145.2 -54.6Q151.1 -54.6 155.15 -52Q159.2 -49.4 161.3 -44.850Q163.4 -40.3 163.4 -34.3V0H150.6V-30.2Q150.6 -34.7 149.7 -37.8Q148.8 -40.9 146.75 -42.55Q144.7 -44.2 141.3 -44.2Q136.2 -44.2 133.15 -40.6Q130.1 -37 130.1 -30.2V0ZM194.3 0Q186.3 0 182.55 -3.7Q178.8 -7.4 178.8 -15.3V-65.9H191.6V-16.5Q191.6 -12.8 193.2 -11.35Q194.8 -9.9 198.2 -9.9H205.7V0ZM170.4 -43.5V-53.4H205.7V-43.5ZM231.22 0 256.82 -71H272.7L298.3 0H284.66L278.8 -16.8H250.68L244.82 0ZM254.5 -27.92H275.02L264.78 -57.86ZM308.2 0V-71H321.2V0Z"/></svg>';
+const IG = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="3"/><circle cx="10" cy="10" r="3.25"/><circle cx="14.25" cy="5.75" r="0.75" fill="currentColor" stroke="none"/></svg>';
+const ARROW = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M3 10 H17 M12 5 L17 10 L12 15"/></svg>';
+
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === "html") n.innerHTML = v; else if (k === "style") n.style.cssText = v; else n.setAttribute(k, v === true ? "" : v);
+  }
+  for (const k of kids.flat(Infinity)) if (k != null && k !== "") n.append(k.nodeType ? k : String(k));
+  return n;
+}
+const ext = (url, kids, cls) => url ? el("a", { href: url, target: "_blank", rel: "noopener", class: cls }, kids) : el("span", { class: cls }, kids);
+function fmt(n) {
+  if (!n) return "";
+  if (n >= 1e6) return (n / 1e6).toFixed(n >= 1e7 ? 0 : 1).replace(/\.0$/, "") + "M";
+  if (n >= 1e3) return (n / 1e3).toFixed(n >= 1e5 ? 0 : 1).replace(/\.0$/, "") + "K";
+  return String(n);
+}
+function day(iso) {
+  const d = new Date((iso || "") + "T12:00:00");
+  return isNaN(d) ? (iso || "") : d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+function initials(c) {
+  const src = (c.name || c.handle || "?").replace(/[^A-Za-z0-9 ._]/g, "").trim();
+  const parts = src.split(/[ ._]+/).filter(Boolean);
+  return ((parts[0] || "?")[0] + (parts[1] ? parts[1][0] : "")).toUpperCase();
+}
+const pad = n => String(n).padStart(2, "0");
+const clean = h => (h || "").replace(/^@/, "");
+
+// Profile photo when c.photo is set (a data: URI or a URL); initials when it is missing or fails to load.
+function avatar(c) {
+  const box = el("div", { class: "avatar" });
+  const fallback = () => { box.textContent = initials(c); };
+  if (!c.photo) { fallback(); return box; }
+  const img = el("img", { src: c.photo, alt: "", loading: "lazy", referrerpolicy: "no-referrer" });
+  img.addEventListener("error", () => { img.remove(); fallback(); });
+  box.append(img);
+  return box;
+}
+
+function sponsored(c) {
+  const m = /(\d+)\s*(?:of|\/)\s*(?:last\s*)?(\d+)/i.exec(c.sponsored || "");
+  return m ? el("div", { class: "big" }, m[1], el("span", {}, "of last " + m[2] + " posts")) : el("div", {}, c.sponsored || "Not checked");
+}
+
+function card(c, platform) {
+  const angles = c.angles || [];
+  const meta = [c.followers ? [el("b", {}, fmt(c.followers)), " followers"] : null, c.country || null, c.lastPost ? "Last post " + day(c.lastPost) : null].filter(Boolean);
+  return el("article", { class: "panel card" + (c.alreadyFan ? " fan" : ""), "data-angles": angles.join(" ") },
+    el("div", { class: "head" },
+      avatar(c),
+      el("div", { class: "who" },
+        el("div", {}, ext(c.url, "@" + clean(c.handle), "handle"), c.name ? el("span", { class: "name" }, c.name) : ""),
+        el("div", { class: "meta" }, meta.map((m, i) => [i ? el("span", { class: "dot" }, "·") : "", m]))),
+      el("div", { class: "rank" }, el("span", { class: "br" }, "[ "), el("b", {}, pad(c.rank)), el("span", { class: "br" }, " ]"))),
+    el("div", { class: "chips" },
+      c.alreadyFan ? el("span", { class: "chip fan" }, "Already a fan") : "",
+      angles.map(a => el("span", { class: "chip", title: ANGLE_NAME[a] || a }, ANGLE_NAME[a] || a)),
+      (c.redFlags || []).map(f => el("span", { class: "chip flag" }, f))),
+    el("p", { class: "why" }, c.whyFit),
+    c.painPoint ? el("div", { class: "painlbl" }, el("span", { class: "sl" }, "//"), c.painPoint) : "",
+    el("div", { class: "grid" },
+      el("div", {},
+        el("div", { class: "lbl" }, "Proof posts"),
+        (c.proof || []).length
+          ? el("ul", { class: "posts" }, c.proof.map((p, i) => el("li", {},
+              el("span", { class: "i" }, pad(i + 1)),
+              ext(p.url, [el("span", { class: "t" }, p.note || "Post " + (i + 1)), el("span", { class: "arr" }, "↗")]))))
+          : el("div", { class: "muted" }, "No proof posts")),
+      el("div", { class: "deal" },
+        el("div", { class: "lbl" }, "Sponsored posts"),
+        sponsored(c),
+        (c.brands || []).length ? el("div", { class: "pills" }, c.brands.map(b => el("span", { class: "pill" }, b))) : "",
+        c.contact ? el("div", { class: "contact" }, c.contact) : "")),
+    c.url ? el("div", { class: "foot" }, el("a", { class: "go", href: c.url, target: "_blank", rel: "noopener", html: "View on " + platform + " " + ARROW })) : "");
+}
+
+function creatorSection(list, platform) {
+  const out = [];
+  const present = ["Category", "Pain", "Customer"].filter(a => list.some(c => (c.angles || []).includes(a)));
+  const cards = el("div", { class: "cards" });
+  list.slice().sort((a, b) => a.rank - b.rank).forEach(c => cards.append(card(c, platform)));
+  const tabs = el("div", { class: "tabs", role: "group", "aria-label": "Filter by angle" });
+  const mk = (label, angle, count) => { const b = el("button", { type: "button", "aria-pressed": angle ? "false" : "true" }, label, el("span", { class: "c" }, count)); b.dataset.angle = angle || ""; return b; };
+  const buttons = [mk("All", "", list.length), ...present.map(a => mk(ANGLE_NAME[a], a, list.filter(c => (c.angles || []).includes(a)).length))];
+  const fans = list.filter(c => c.alreadyFan).length;
+  if (fans) buttons.push(mk("Already a fan", "__fan", fans));
+  buttons.forEach(b => { tabs.append(b); b.addEventListener("click", () => {
+    buttons.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    const a = b.dataset.angle;
+    cards.querySelectorAll(".card").forEach(cd => {
+      const show = !a || (a === "__fan" ? cd.classList.contains("fan") : cd.dataset.angles.split(" ").includes(a));
+      cd.style.display = show ? "" : "none";
+    });
+  }); });
+  out.push(el("div", { class: "tools" }, tabs), cards);
+  return out;
+}
+
+function seam(n, total, label) {
+  return el("div", { class: "seam" }, el("span", { class: "br" }, "["), el("span", { class: "n" }, pad(n)), el("span", { class: "br" }, "/ " + pad(total) + " ]"), "· " + label);
+}
+
+function render() {
+  const d = DATA, b = d.brief, app = document.getElementById("app");
+  const name = d.brand.name || "your brand";
+  document.title = (d.brand.name || "Brand") + " Creators";
+  const hasTT = (d.tiktokCreators || []).length > 0;
+  const total = hasTT ? 3 : 2;
+  const fans = (d.creators || []).filter(c => c.alreadyFan).length;
+  const multi = (d.creators || []).filter(c => (c.angles || []).length > 1).length;
+
+  app.append(
+    el("div", { class: "bar" }, el("a", { href: "https://tryklint.ai", target: "_blank", rel: "noopener", html: LOGO, "aria-label": "Klint AI" }),
+      el("span", { class: "token" }, el("span", { class: "br" }, "[ "), "Instagram" + (d.generated ? " · " + day(d.generated) : ""), el("span", { class: "br" }, " ]"))),
+    el("div", { class: "eyebrow", html: '<span class="sl">//</span> ' + IG + ' Creator shortlist' }),
+    el("h1", {}, "Instagram creators for ", el("em", {}, name)),
+    el("div", { class: "sub" }, ext(d.brand.url, (d.brand.url || "").replace(/^https?:\/\//, "").replace(/\/$/, "")), d.brand.instagram ? "  ·  " + d.brand.instagram : ""));
+
+  if (d.status === "done") {
+    app.append(el("div", { class: "stats" },
+      el("div", { class: "stat" }, el("div", { class: "k" }, "Creators"), el("div", { class: "v" }, d.creators.length)),
+      el("div", { class: "stat" }, el("div", { class: "k" }, "Already fans"), el("div", { class: "v" + (fans ? " hot" : "") }, fans)),
+      el("div", { class: "stat" }, el("div", { class: "k" }, "Found by 2+ angles"), el("div", { class: "v" }, multi)),
+      el("div", { class: "stat" }, el("div", { class: "k" }, "Search"), el("div", { class: "v sm" }, [b.country, b.size].filter(Boolean).join(" · ") || "—"))));
+  }
+
+  // 01 Brief
+  app.append(seam(1, total, "Brand brief"), el("h2", {}, "What we learned about " + name),
+    el("div", { class: "panel brief" },
+      [["Sells", [b.sells, b.priceRange].filter(Boolean).join(" · ")], ["Target customer", b.customer], ["Why people buy", b.whyBuy], ["Instagram angle", b.angle]]
+        .filter(([, v]) => v).map(([k, v]) => el("div", {}, el("div", { class: "lbl" }, k), el("div", {}, v)))));
+  if (d.painPoints.length) app.append(el("div", { class: "pains" }, d.painPoints.map(p => el("div", { class: "panel pain" },
+    el("div", { class: "t" }, p.label),
+    p.phrase ? el("div", { class: "q" }, "“" + p.phrase + "”") : "",
+    p.quote ? el("blockquote", {}, "“" + p.quote + "” ", p.quoteUrl ? ext(p.quoteUrl, "Source") : "") : ""))));
+  if (d.competitors.length) app.append(el("div", { class: "lbl", style: "margin:20px 0 8px" }, "Competitors"),
+    el("div", { class: "pills" }, d.competitors.map(c => el("span", { class: "pill" }, c.name, c.instagram ? el("span", { class: "h" }, c.instagram) : ""))));
+
+  // 02 Creators
+  app.append(seam(2, total, "Instagram creators"));
+  if (d.status !== "done") {
+    app.append(el("div", { class: "panel searching" },
+      el("div", { class: "token" }, el("span", { class: "pulse" }), "Searching"),
+      el("div", {}, "Klint is searching Instagram from three angles. This usually takes 10–25 minutes.")));
+  } else {
+    app.append(el("h2", {}, d.creators.length + " creators, ranked"));
+    if (d.summary) app.append(el("p", { class: "summary" }, d.summary));
+    if (d.missingAngles.length) app.append(el("div", { class: "notice" }, "Missing angle: " + d.missingAngles.map(a => ANGLE_NAME[a] || a).join(", ") + ". Ask Claude to try it again."));
+    app.append(...creatorSection(d.creators, "Instagram"));
+    if (hasTT) app.append(seam(3, total, "TikTok creators"), el("h2", {}, d.tiktokCreators.length + " TikTok creators"), ...creatorSection(d.tiktokCreators, "TikTok"));
+  }
+
+  app.append(el("footer", {}, el("span", {}, "Brand research by Claude · Creator search by Klint"),
+    el("a", { href: "https://tryklint.ai", target: "_blank", rel: "noopener", html: LOGO })));
+}
+render();
+</script>
+</body>
+</html>
