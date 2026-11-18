@@ -5,6 +5,7 @@ Free, ready-to-use marketing skills for Claude. Download one, upload it to Claud
 | Skill | What it does | Needs | Download |
 |---|---|---|---|
 | [Instagram Influencer Finder](instagram-influencer-finder/) | Give it your website. It researches your brand and finds a ranked list of Instagram creators who fit, with the posts that prove it. | Claude + [Klint](https://tryklint.ai) (free account) | [Zip](https://github.com/david-roberts-94/shareable-marketing-skills/releases/download/instagram-influencer-finder-v1/instagram-influencer-finder.zip) |
+| [AI Video Factory](ai-video-factory/) | Every prompt and skill to turn Claude into your video editor: ideas from what's going viral, scripts in your voice, cuts, captions, and motion graphics. | Claude Code (or the Code tab of the Claude desktop app) + [Klint](https://tryklint.ai) (free account) | [Zip](https://github.com/david-roberts-94/shareable-marketing-skills/releases/download/ai-video-factory-v1/ai-video-factory.zip) |
 
 ## How to install any skill
 
@@ -14,3 +15,5 @@ Free, ready-to-use marketing skills for Claude. Download one, upload it to Claud
 4. Open a new chat and ask for what the skill does.
 
 Each skill's folder has a README with the full steps, what it costs, and an example.
+
+**Packs for Claude Code** (such as the AI Video Factory) install differently: unzip them and follow the prompts in their README.
